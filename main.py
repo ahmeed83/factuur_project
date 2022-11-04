@@ -5,6 +5,7 @@ from openpyxl.styles import Font
 from pathlib import Path
 from jproperties import Properties
 from excel2pdf import convert_excel_to_pdf
+import os
 
 # Read properties from property file
 configs = Properties()
@@ -26,12 +27,12 @@ datum_werkzaamheden = 'voor periode %s t/m %s' % \
 
 hours = sys.argv[1]
 
-ws['C22'] = int(hours)
-ws['D22'] = int(configs.get("CLIENT_HOUR_RATE").data)
-ws['D25'] = int(configs.get("CLIENT_RATE").data)
-ws['B22'] = configs.get("CLIENT_DESCRIPTION").data
-ws['B23'] = datum_werkzaamheden
-ws['B25'] = configs.get("CLIENT_RATE_DESCRIPTION").data
+ws['C26'] = int(hours)
+ws['D26'] = int(configs.get("CLIENT_HOUR_RATE").data)
+ws['D29'] = int(configs.get("CLIENT_RATE").data)
+ws['B26'] = configs.get("CLIENT_DESCRIPTION").data
+ws['B27'] = datum_werkzaamheden
+ws['B29'] = configs.get("CLIENT_RATE_DESCRIPTION").data
 
 ws['D2'] = configs.get("CLIENT_NAME").data
 ws['D2'].font = Font(bold=True, size=20)
@@ -59,3 +60,5 @@ fileName = '%s/Desktop/sample.xlsx' % home
 wb.save(fileName)
 
 convert_excel_to_pdf()
+
+os.remove(fileName)
