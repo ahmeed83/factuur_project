@@ -1,10 +1,10 @@
 import subprocess
 
 
-def convert_excel_to_pdf():
-    cmd = """
+def convert_excel_to_pdf(name):
+    cmd = f"""
         on run
-                set thisFile to ((path to desktop as text) & "sample.xlsx") as alias
+                set thisFile to ((path to desktop as text) & "{name}") as alias
                 tell application "Finder"
                     set theItemParentPath to container of (thisFile as alias) as text
                     set theItemName to (name of thisFile) as string

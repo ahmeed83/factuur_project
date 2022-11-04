@@ -40,7 +40,8 @@ ws['D3'] = configs.get("CLIENT_ADDRESS_1").data
 ws['D4'] = configs.get("CLIENT_ADDRESS_2").data
 
 ws['D7'] = 'Factuur'
-ws['D8'] = 'Factuurnummer: %s' % start_day_of_prev_month.strftime('%Y-%m')
+factuur_number = start_day_of_prev_month.strftime('%Y-%m')
+ws['D8'] = 'Factuurnummer: %s' % factuur_number
 ws['D9'] = 'Datum: %s' % today.strftime(date_format)
 
 ws['B7'] = configs.get("COMPANY_NAME").data
@@ -54,11 +55,12 @@ ws['B15'] = 'K.v.k : ' + configs.get("COMPANY_KVK").data
 ws['B16'] = 'BTW-nummer : ' + configs.get("COMPANY_BTW").data
 ws['B17'] = 'IBAN : ' + configs.get("COMPANY_IBAN").data
 
-home = str(Path.home())
-fileName = '%s/Desktop/sample.xlsx' % home
+home_path = str(Path.home())
+file_name = 'invoice-%s-%s.xlsx' % (configs.get("COMPANY_NAME").data, factuur_number)
+file_path = '%s/Desktop/%s' % (home_path, file_name)
 
-wb.save(fileName)
+wb.save(file_path)
 
-convert_excel_to_pdf()
+convert_excel_to_pdf(file_name)
 
-os.remove(fileName)
+os.remove(file_path)
