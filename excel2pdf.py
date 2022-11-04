@@ -4,10 +4,7 @@ import subprocess
 def convert_excel_to_pdf():
     cmd = """
         on run
-                set theseFiles to (choose file of type {"com.microsoft.excel.xls", "org.openxmlformats.spreadsheetml.sheet"} ¬
-                with prompt "Choose the Excel sheets to export to PDF:" with multiple selections allowed)
-            -- display dialog "theseItems: " & theseItems
-            repeat with thisFile in theseFiles
+                set thisFile to ((path to desktop as text) & "sample.xlsx") as alias
                 tell application "Finder"
                     set theItemParentPath to container of (thisFile as alias) as text
                     set theItemName to (name of thisFile) as string
@@ -30,8 +27,7 @@ def convert_excel_to_pdf():
                     -- close active workbook saving no
                     if not isRun then quit
                 end tell
-            end repeat
-        end run 
+        end run
     """
     result = subprocess.run(['osascript', '-e', cmd], capture_output=True)
     return result.stdout
